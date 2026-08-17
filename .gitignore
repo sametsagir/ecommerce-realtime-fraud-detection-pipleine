@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Spark Checkpoints & Logs
+spark/checkpoints/
+checkpoints/
+*.log
+logs/
+
+# Airflow Local Logs & DB
+airflow/logs/
+airflow/airflow.db
+airflow/standalone_admin_password.txt
+
+# IDE / Editor Configs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Docker Data (if any local folders are used)
+.docker/
+
+# Sensitive Configuration (Never commit this to git!)
+.env

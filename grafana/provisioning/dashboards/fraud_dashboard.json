@@ -1,0 +1,348 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "title": "Toplam Yakalanan Şüpheli İşlem",
+      "type": "stat",
+      "datasource": {
+        "type": "mssql",
+        "uid": "MSSQL"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mssql",
+            "uid": "MSSQL"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) as value FROM supheli_siparisler;",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "fixedColor": "red",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "id": 2,
+      "title": "Son 5 Dakikada Yakalanan Şüpheli İşlem",
+      "type": "stat",
+      "datasource": {
+        "type": "mssql",
+        "uid": "MSSQL"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mssql",
+            "uid": "MSSQL"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) as value FROM supheli_siparisler WHERE order_timestamp >= DATEADD(minute, -5, GETDATE());",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 3,
+      "title": "Toplam Ciro Kaybı Riski",
+      "type": "stat",
+      "datasource": {
+        "type": "mssql",
+        "uid": "MSSQL"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mssql",
+            "uid": "MSSQL"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COALESCE(SUM(price * quantity), 0) as value FROM supheli_siparisler;",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "fixedColor": "orange",
+          "unit": "currencyTRY"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 4,
+      "title": "Anomali Türü Dağılımı",
+      "type": "barchart",
+      "datasource": {
+        "type": "mssql",
+        "uid": "MSSQL"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mssql",
+            "uid": "MSSQL"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT anomaly_reason, COUNT(*) as count FROM supheli_siparisler GROUP BY anomaly_reason;",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "orientation": "horizontal"
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 5,
+      "title": "Zamana Göre Anomali Frekansı",
+      "type": "timeseries",
+      "datasource": {
+        "type": "mssql",
+        "uid": "MSSQL"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mssql",
+            "uid": "MSSQL"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT order_timestamp AS time, COUNT(*) as value, anomaly_reason as metric FROM supheli_siparisler GROUP BY order_timestamp, anomaly_reason ORDER BY order_timestamp;",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 6,
+      "title": "Son Yakalanan Şüpheli İşlemler (Canlı Tablo)",
+      "type": "table",
+      "datasource": {
+        "type": "mssql",
+        "uid": "MSSQL"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mssql",
+            "uid": "MSSQL"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT TOP 15 order_id, user_id, product_id, price, quantity, order_timestamp, ip_address, anomaly_reason FROM supheli_siparisler ORDER BY order_timestamp DESC;",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 7,
+      "title": "Airflow Gunluk Mutabakat ve Denetim Raporlari (gunluk_ozet)",
+      "type": "table",
+      "datasource": {
+        "type": "mssql",
+        "uid": "MSSQL"
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "mssql",
+            "uid": "MSSQL"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT summary_date as [Tarih], total_orders as [Toplam Siparis], total_clean_revenue as [Temiz Ciro (TL)], total_fraud_count as [Engellenen Sahte Siparis], ROUND(fraud_ratio * 100, 2) as [Sahtekarlik Orani (%)] FROM gunluk_ozet ORDER BY summary_date DESC;",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "title": "E-Commerce Real-time Fraud Dashboard",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s"
+    ]
+  },
+  "timezone": "",
+  "weekStart": ""
+}

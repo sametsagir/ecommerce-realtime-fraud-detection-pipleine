@@ -1,0 +1,48 @@
+{
+  "type": "record",
+  "name": "OrderEvent",
+  "namespace": "com.ecommerce.realtime",
+  "doc": "Schema definition for real-time e-commerce order events.",
+  "fields": [
+    {
+      "name": "order_id",
+      "type": "string",
+      "doc": "Unique UUID identifier of the order."
+    },
+    {
+      "name": "user_id",
+      "type": "string",
+      "doc": "Identifier of the customer placing the order."
+    },
+    {
+      "name": "product_id",
+      "type": "string",
+      "doc": "Identifier of the product being purchased."
+    },
+    {
+      "name": "price",
+      "type": "double",
+      "doc": "Unit price of the product (can contain zero or negative values in case of system anomalies)."
+    },
+    {
+      "name": "quantity",
+      "type": "int",
+      "doc": "Quantity of the product being purchased."
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "doc": "Epoch millisecond timestamp of order creation, used as event time in stream watermarking."
+    },
+    {
+      "name": "ip_address",
+      "type": "string",
+      "doc": "IP address of the client device initiating the order."
+    },
+    {
+      "name": "payment_method",
+      "type": "string",
+      "doc": "Payment gateway method (e.g. credit_card, bank_transfer, mobile_payment)."
+    }
+  ]
+}
